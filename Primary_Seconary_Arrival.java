@@ -7,7 +7,7 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Primary_Secondary_Arrival
+class Primary_Secondary_Arrival
 {
 	public static Queue<Packet> q3, q2, q1;
 	private static int s3 = 0, s2 = 0, s1 = 0;
