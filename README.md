@@ -10,3 +10,6 @@ Now when the program starts then secondary users are asked to arrive so they fol
 Secondary user packets are assumed to be of short duration and during the Secondary user packet stay in queue if Primary user packet arrives then collision occurs and both have to be dropped (Collision count becomes +1);
 
 
+The output.txt file is important for filing the data...
+
+Put the files in the same directory....
