@@ -1,5 +1,3 @@
-Primary_Seconary_Arrival.java
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -9,9 +7,7 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
 
-import Network.Packet;
-
-public class Primary_Seconary_Arrival
+public class Primary_Secondary_Arrival
 {
 	public static Queue<Packet> q3, q2, q1;
 	private static int s3 = 0, s2 = 0, s1 = 0;
@@ -37,7 +33,7 @@ public class Primary_Seconary_Arrival
 		System.out.println(Thread.currentThread().getName());
 		sc = new Scanner(System.in);
 		out = new PrintWriter(new FileWriter(
-				"C:/Users/CrysiS/workspace/Poly/src/output.txt"));
+				"output.txt"));
 		print("Enter the number of packets");
 		n = sc.nextInt();
 		p = new Packet[n + 1]; // 0.1 Million Packets
@@ -50,7 +46,7 @@ public class Primary_Seconary_Arrival
 		// ===============================================================================================//
 
 		BufferedReader reader = new BufferedReader(new FileReader(
-				"C:/Users/CrysiS/workspace/Poly/src/p.txt"));
+				"p.txt"));
 		String line = null;
 		int lines = 0;
 		//int size = 0;
@@ -65,7 +61,7 @@ public class Primary_Seconary_Arrival
 		int i1 = 1;
 		line = null;
 		reader = new BufferedReader(new FileReader(
-				"C:/Users/CrysiS/workspace/Poly/src/p.txt"));
+				"p.txt"));
 
 		while ((line = reader.readLine()) != null)
 		{
@@ -138,7 +134,7 @@ public class Primary_Seconary_Arrival
 			switch (j = sc.nextInt())
 			{
 				case 1:
-					print("Get data of the packets negative to finish");
+					print("Get data of the packets 0 to finish");
 					show();
 					/*
 					 * out.print("Hello "); out.println("world"+p[1].new_data);
@@ -462,6 +458,83 @@ public class Primary_Seconary_Arrival
 			System.out.println("Update just stopped!!!!");
 			return;
 		}
+	}
+
+}
+
+
+class Packet
+{
+	public int id = 0;
+	public int a_coff = 0;
+	public String description = "";
+	public int tolerance, final_tol;
+	Thread t;
+	public static double data[];
+	public String new_data = "";
+	PrintWriter out;
+	public int time, timestamp;
+	int size = 100;
+	public int q_no = 0;
+	public int in_q = 0;
+	public long entering_Queue_Time = 0, entering_Scheluder_Time = 0;
+	public float final_p=(float)((int) ((100.0 / tolerance) * 10000) / 10000.0);
+	
+	public Packet(int id, int tolerance, int time, int timestamp) throws Exception
+	{
+		this.id = id;
+		this.time = time;
+		this.timestamp = timestamp;
+		this.tolerance = Math.abs(tolerance);
+		data = new double[] { tolerance,
+				(int) ((100.0 / tolerance) * 10000) / 10000.0, time, timestamp };
+		new_data = "datas are ->>    " + data[0] + "   " + data[1] + "    "
+				+ data[2] + "    " + data[3];
+		final_tol = tolerance + (int) changing_wait_time();
+	}
+
+	public double[] getData()
+	{
+		System.out.println(new_data);
+		return data;
+	}
+
+	public int getId()
+	{
+		return id;
+	}
+
+	public int getTol()
+	{
+		return final_tol = tolerance - (int) changing_wait_time();
+	}
+	
+	public float final_priority(){
+		return final_p+changing_wait_time()*(1+changing_wait_time());
+	}
+
+	public long changing_wait_time()
+	{
+		return System.currentTimeMillis() - entering_Queue_Time;
+	}
+
+	public long getWaitingTime()
+	{
+		return entering_Scheluder_Time - entering_Queue_Time;
+	}
+
+	public long getFinalTol()
+	{
+		return max(tolerance - (int) changing_wait_time(), 0);
+	}
+
+	private long max(int i, int j)
+	{
+		if (i > j)
+		{
+			return i;
+		} else
+			return j;
 	}
 
 }
